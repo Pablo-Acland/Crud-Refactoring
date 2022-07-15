@@ -1,5 +1,6 @@
 package com.sofka.Software.models;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,11 +23,40 @@ public class ListTaskModel {
     /**
      * relacion muchos a uno , implementa la relacion con la clase primaria lista
      */
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "listTask_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "list_id", referencedColumnName = "id")
+    private ListModel list;
 
-    @JsonBackReference
-    private ListModel listaid;
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public ListModel getList() {
+        return list;
+    }
+
+    public void setList(ListModel list) {
+        this.list = list;
+    }
 
 }
