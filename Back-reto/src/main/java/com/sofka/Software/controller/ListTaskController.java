@@ -4,30 +4,30 @@ import com.sofka.Software.models.ListTaskModel;
 import com.sofka.Software.services.ListTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/listTask")
 public class ListTaskController {
     @Autowired
     private ListTaskService listTaskService;
 
-    @GetMapping(path = "/listTasks")
+    @GetMapping
     public Iterable<ListTaskModel> list(){
         return listTaskService.list();
     }
 
-    @PostMapping(path = "/listTask")
+    @PostMapping(path = "/create")
     public ListTaskModel createListTask(@RequestBody ListTaskModel listTask){
         return listTaskService.createListTask(listTask);
     }
 
-    @PutMapping(path = "/listTask/{id}")
+    @PutMapping(path = "/{id}")
     public ListTaskModel updatelistTask(@RequestBody ListTaskModel listTask, @PathVariable(value="id") Long id ) {
-        listTaskService.updateListTask(id, listTask);
-        return null;
+
+        return listTaskService.updateListTask(id, listTask);
     }
 
     /**
@@ -35,8 +35,9 @@ public class ListTaskController {
      * Revisa si esto que propongo está bien o no, si no está bien ¿Como lo solucionas?
      */
 
-    // @DeleteMapping(path = "/listTask/{id}")
-    // public void deletelistTask(@PathVariable("id")Long id){
-       // listTaskService.deleteListTask(id);
-    //}
-//}
+     @DeleteMapping(path = "/delete/{id}")
+     public void deletelistTask(@PathVariable("id")Long id){
+         listTaskService.deleteListTask(id);
+     }
+
+}

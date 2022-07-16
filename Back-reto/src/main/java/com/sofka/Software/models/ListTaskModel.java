@@ -1,6 +1,5 @@
 package com.sofka.Software.models;
-
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,7 +14,7 @@ public class ListTaskModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    @Column(unique = true, nullable = false)
+    @Column( nullable = false)
     private Boolean completed;
     @Column(unique = true, nullable = false)
     private String name;
@@ -23,8 +22,10 @@ public class ListTaskModel {
     /**
      * relacion muchos a uno , implementa la relacion con la clase primaria lista
      */
-    @ManyToOne
-    @JoinColumn(name = "list_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "listTask_id", nullable = false)
+
+    @JsonBackReference
     private ListModel list;
 
     public Long getId() {
@@ -35,20 +36,20 @@ public class ListTaskModel {
         this.id = id;
     }
 
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
     }
 
     public ListModel getList() {
@@ -58,5 +59,4 @@ public class ListTaskModel {
     public void setList(ListModel list) {
         this.list = list;
     }
-
 }
